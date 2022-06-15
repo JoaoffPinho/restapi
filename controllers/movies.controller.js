@@ -128,15 +128,15 @@ exports.addRating = async (req, res) => {
         return;
     }
     
-    let ratingMovie = {
-        name: req.params.name,
-        rating: req.body.rating
-    }
+    // let ratingMovie = {
+    //     name: req.params.name,
+    //     rating: req.body.rating
+    // }
 
     try {
         let data = await Movie.findOneAndUpdate(
             {"title": req.params.movieTitle},
-            { $push: {ratings: ratingMovie}})
+            { $push: {ratings: req.body.rating}})
             console.log(data);
         res.status(201).json({ success: true, msg: "New rating added."});
         }
