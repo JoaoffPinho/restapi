@@ -6,8 +6,11 @@ const badgeController = require("../controllers/badges.controller");
 let router = express.Router();
 
 
-router.route('/')
+router.route('/')    
     .post(authController.verifyToken, badgeController.createBadge);
+
+router.route('/users/:name')
+    .get(authController.verifyToken, moviesController.getBadges)
 
 router.route('/:badgeTitle/users/:name/remove')
     .delete(authController.verifyToken, badgeController.delete)

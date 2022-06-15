@@ -1,5 +1,6 @@
 const db = require("../models/index.js");
 const Badge = db.badges;
+const User = db.users;
 
 exports.createBadge = async (req, res) => {
     
@@ -36,6 +37,33 @@ exports.createBadge = async (req, res) => {
                 });
         };
 };
+
+exports.getBadges = async (req, res) => { 
+    if ( req.loggedUsername != req.params.name ) {
+        res.status(400).json({ message: "Must be connected!" });
+        return;
+    }
+    
+    const perPage = 10, page = req.query.page;
+    try {
+        const user = await User
+        .findOne({"name": req.params.name})
+        .exec();
+
+        let data = await Badge
+            .find({ reqPoints: { $lt: user.points } })
+            .select('title image') // select the fields
+            .skip(perPage * page)
+            .limit(perPage)
+            .exec();
+        res.status(200).json({success: true, badges: data});
+        }
+        catch (err) {
+            res.status(500).json({
+                success: false, msg: err.message || "Some error occurred while retrieving the movies."
+            });
+        };
+}; 
 
 exports.delete = async (req, res) => {
     try {
