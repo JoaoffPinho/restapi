@@ -145,11 +145,19 @@ exports.getHomeInfo = async (req, res) => {
     
     try {
         let data = []
-        let serie = await Serie
+        try{
+            let serie = await Serie
             .find()
             .select('title image')
             .limit(3)
             .exec();
+            return serie
+
+        } catch(err){
+                res.status(500).json({
+                    success: false, msg: err.message || "Some error occurred while retrieving the movies."
+                });
+            }
         let quizz = await Quizz
             .find()
             .select('title image')
@@ -162,6 +170,7 @@ exports.getHomeInfo = async (req, res) => {
             .exec();
 
         data.push(serie,quizz,movie)
+
         res.status(200).json(data);
         }
         catch (err) {
