@@ -129,11 +129,15 @@ exports.addRating = async (req, res) => {
         return;
     }
     
+    let ratingQuizz = {
+        name: req.params.name,
+        rating: req.body.rating
+    }
 
     try {
         let data = await Quizz.findOneAndUpdate(
             {"title": req.params.quizzTitle},
-            { $push: {ratings: req.body.rating}})
+            { $push: {ratings: ratingQuizz}})
             console.log(data);
         res.status(201).json({ success: true, msg: "New rating added."});
         }
