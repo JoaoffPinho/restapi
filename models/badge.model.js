@@ -1,7 +1,7 @@
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
             {
-                imagem: [],
+                image: String,
                 title: { 
                     type: String, 
                     unique: true,
