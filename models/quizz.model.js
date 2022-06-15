@@ -15,6 +15,10 @@ module.exports = (mongoose) => {
                     required: [true, 'Why no type?']
                 },
                 image: String,
+                comments: [{
+                    content: String,
+                    name: String
+                }],
                 points:{
                     type: Number, 
                     required: [true, 'Why no points?']
