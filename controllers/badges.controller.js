@@ -91,7 +91,7 @@ exports.delete = async (req, res) => {
     }
 
     try {
-    const badge = await Badge.deleteOne({"title": req.params.badgeTitle}).exec();
+    const badge = await Badge.deleteOne({"title": req.params.badgeTitle})
     if (!badge) // returns the deleted document (if any) to the callback
     res.status(404).json({
     message: `Not found Badge with title=${req.params.badgeTitle}.`
