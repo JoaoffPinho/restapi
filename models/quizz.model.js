@@ -31,12 +31,16 @@ module.exports = (mongoose) => {
                     }]
                 }],
                 ratings:[{
-                    type: Number,
-                    enum: {
-                        values: [1, 2, 3, 4, 5],
-                        messages: '{VALUE} is not supported'
+                    name: String,
+                    rating:{
+                        type: Number,
+                        enum: {
+                            values: [1, 2, 3, 4, 5],
+                            messages: '{VALUE} is not supported'
+                        },
+                        required: [true, "No rating"]
                     }
-                }]
+                }],
             },
             { timestamps: false }
         );
