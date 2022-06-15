@@ -55,7 +55,7 @@ exports.getBadges = async (req, res) => {
         .exec();
 
 
-        if(req.loggedRole == 'admin'){
+        if(req.loggedUserRole == 'admin'){
             let data = await Badge
             .find()
             .select('title image') // select the fields
