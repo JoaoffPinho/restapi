@@ -10,7 +10,7 @@ router.route('/')
     .post(authController.verifyToken, badgeController.createBadge);
 
 router.route('/users/:name')
-    .get(authController.verifyToken, moviesController.getBadges)
+    .get(authController.verifyToken, badgeController.getBadges)
 
 router.route('/:badgeTitle/users/:name/remove')
     .delete(authController.verifyToken, badgeController.delete)
