@@ -1,13 +1,16 @@
 const express = require('express');
-const tutorialController = require("../controllers/badges.controller");
+const authController = require("../controllers/auth.controller");
+const badgeController = require("../controllers/badges.controller");
 
 // express router
 let router = express.Router();
 
 
-// router.route('/')
-//     .get()
+router.route('/')
+    .post(authController.verifyToken, badgeController.createBadge);
 
+router.route('/:badgeTitle/users/:name/remove')
+    .delete(authController.verifyToken, badgeController.delete)
 
 router.all('*', function (req, res) {
     //send an predefined error message 

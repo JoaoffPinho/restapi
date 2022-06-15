@@ -151,3 +151,20 @@ exports.addRating = async (req, res) => {
                 });
         };
 };
+
+exports.delete = async (req, res) => {
+    try {
+    const quizz = await Quizz.findOneAndRemove(req.params.quizzTitle).exec();
+    if (!quizz) // returns the deleted document (if any) to the callback
+    res.status(404).json({
+    message: `Not found quizz with title=${req.params.quizzTitle}.`
+    });
+    else
+    res.status(200).json({
+    message: `Quizz name=${req.params.quizzTitle} was deleted successfully.`
+    });
+    } catch (err) {
+    res.status(500).json({
+    message: `Error deleting quizz with name=${req.params.quizzTitle}.`
+    });
+}}

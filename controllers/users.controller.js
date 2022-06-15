@@ -7,7 +7,7 @@ const User = db.users;
 const Quizz = db.quizzes;
 const Movie = db.movies;
 const Serie = db.series;
-
+const Badge = db.badges;
 
 exports.createUser = async (req, res) => {
     
@@ -58,9 +58,9 @@ exports.login = async (req, res) => {
         
         // sign the given payload (user ID and type) into a JWT payload – builds JWT token, using secret key
         const token = jwt.sign({ name: user.name, role: user.role },
-            config.SECRET, { expiresIn: '24h' // 24 hours
+            config.JWT_SECRET, { expiresIn: '24h' // 24 hours
         });
-            return res.status(200).json({ success: true, accessToken: token });
+            return res.status(200).json({ success: true, accessToken: token, name: user.name });
     } 
     catch (err) {
         if (err.name === "ValidationError") {
@@ -95,7 +95,7 @@ exports.getRanking = async (req, res) => {
 exports.getUserInfo = async (req, res) => {
     try {    
         const user = await User
-        .findOne({"role": req.params.name})
+        .findOne({"name": req.params.name})
         .exec();
         // no data returned means there is no tutorial in DB with that given ID 
         if (user === null) {
@@ -163,7 +163,6 @@ exports.getHomeInfo = async (req, res) => {
 
         data.push(serie,quizz,movie)
         res.status(200).json(data);
-        
         }
         catch (err) {
             res.status(500).json({
@@ -338,11 +337,13 @@ exports.finishQuizz = async (req, res) => {
     // }
     let userQuizzDoneVerification = await User.findOne({"name": req.params.name})
     let foundQuizz = false;
-    userQuizzDoneVerification.doneQuizz.forEach(serie => {
-        if (doneQuizz.title === req.params.quizzTitle){
+    console.log(userQuizzDoneVerification);
+    userQuizzDoneVerification.doneQuizz.forEach(quizz => {
+        if (quizz.title === req.params.quizzTitle){
             foundQuizz = true;
         }
     });
+
     if (foundQuizz)
     return res.status(400).json({ message: "Already in favorites!" });
 
@@ -359,7 +360,7 @@ exports.finishQuizz = async (req, res) => {
             image: data.image
         }
 
-        const user = await User.findOneAndUpdate({"name": req.params.name}, {$inc: {points: data.points}}, { 
+        let user = await User.findOneAndUpdate({"name": req.params.name}, {$inc: {points: data.points}}, { 
             useFindAndModify: false //https://mongoosejs.com/docs/deprecations.html#findandmodify
         }).exec();
 
@@ -543,3 +544,19 @@ exports.removeSerieSeen = async (req, res) => {
         };
 };
 
+exports.delete = async (req, res) => {
+    try {
+    const user = await User.findOneAndRemove(req.body.name).exec();
+    if (!user) // returns the deleted document (if any) to the callback
+    res.status(404).json({
+    message: `Not found user with name=${req.body.name}.`
+    });
+    else
+    res.status(200).json({
+    message: `User name=${req.body.name} was deleted successfully.`
+    });
+    } catch (err) {
+    res.status(500).json({
+    message: `Error deleting user with name=${req.body.name}.`
+    });
+}}

@@ -102,8 +102,7 @@ exports.createComment = async (req, res) => {
             { $push: {comments: comment}})
             console.log(data);
         res.status(201).json({ success: true, msg: "New comment created."});
-        }
-        catch (err) {
+        } catch (err) {
             if (err.name === "ValidationError") {
                 let errors = [];
                 Object.keys(err.errors).forEach((key) => {
@@ -154,3 +153,27 @@ exports.addRating = async (req, res) => {
                 });
         };
 };
+
+exports.delete = async (req, res) => {
+
+    if ( req.loggedUserRole === 'regular') {
+        res.status(400).json({ message: "Must be an admin or advanced!" });
+        return;
+    }
+
+
+    try {
+    const movie = await Movie.deleteOne({"title": req.params.movieTitle});
+    if (!movie) // returns the deleted document (if any) to the callback
+    res.status(404).json({
+    message: `Not found Movie with title=${req.params.movieTitle}.`
+    });
+    else
+    res.status(200).json({
+    message: `Movie id=${req.params.movieTitle} was deleted successfully.`
+    });
+    } catch (err) {
+    res.status(500).json({
+    message: `Error deleting Movie with name=${req.params.movieTitle}.`
+    });
+}}

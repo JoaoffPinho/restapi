@@ -19,6 +19,8 @@ router.route('/:serieTitle/users/:name/comments')
 router.route('/:serieTitle/users/:name/ratings')
     .post(authController.verifyToken, seriesController.addRating)
 
+router.route('/:serieTitle/users/:name/remove')
+    .delete(authController.verifyToken, seriesController.delete)
 
 
 router.all('*', function (req, res) {

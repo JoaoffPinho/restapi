@@ -19,6 +19,9 @@ router.route('/:movieTitle/users/:name/comments')
 router.route('/:movieTitle/users/:name/ratings')
     .put(authController.verifyToken, moviesController.addRating)
 
+router.route('/:movieTitle/users/:name/remove')
+    .delete(authController.verifyToken, moviesController.delete)
+
 
 router.all('*', function (req, res) {
     //send an predefined error message 

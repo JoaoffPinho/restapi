@@ -5,11 +5,22 @@ const userController = require("../controllers/users.controller");
 // express router
 let router = express.Router();
 
+// router.use((req, res, next) => {
+//     res.header(
+//         "Access-Control-Allow-Headers",
+//         "x-access-token, Origin, Content-Type, Accept"
+//     );
+
+//     console.log(`${req.method} ${req.originalUrl}`);
+//     next()
+// })
+
+
 router.route('/')
     .post(userController.createUser);
 
 router.route('/login')
-    .post(userController.login);
+    .post(userController.login); 
 
 router.route('/ranking')
     .get(authController.verifyToken, userController.getRanking) 

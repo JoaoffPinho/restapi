@@ -4,7 +4,8 @@ const config = {
     USER: process.env.DB_USER,
     PASSWORD: process.env.DB_PASSWORD,
     DB: process.env.DB_NAME,
-    SECRET: process.env.SECRET
+    // secret key (as String) to encode and decode token from JWT
+    JWT_SECRET: process.env.JWT_SECRET,
 };
 
 config.URL = `mongodb+srv://${config.USER}:${config.PASSWORD}@cluster0.tl1io.mongodb.net/${config.DB}?retryWrites=true&w=majority`;

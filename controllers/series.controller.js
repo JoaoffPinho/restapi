@@ -136,7 +136,7 @@ exports.addRating = async (req, res) => {
     
 
     try {
-        let data = await Movie.findOneAndUpdate(
+        let data = await Serie.findOneAndUpdate(
             {"title": req.params.serieTitle},
             { $push: {ratings: req.body.rating}})
             console.log(data);
@@ -156,3 +156,20 @@ exports.addRating = async (req, res) => {
                 });
         };
 };
+
+exports.delete = async (req, res) => {
+    try {
+    const serie = await Serie.findOneAndRemove(req.params.serieTitle).exec();
+    if (!serie) // returns the deleted document (if any) to the callback
+    res.status(404).json({
+    message: `Not found serie with title=${req.params.serieTitle}.`
+    });
+    else
+    res.status(200).json({
+    message: `Serie name=${req.params.serieTitle} was deleted successfully.`
+    });
+    } catch (err) {
+    res.status(500).json({
+    message: `Error deleting serie with name=${req.params.serieTitle}.`
+    });
+}}

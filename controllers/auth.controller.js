@@ -14,7 +14,7 @@ exports.verifyToken = (req, res, next) => {
     const token = bearer[1];
     
     try {
-        let decoded = jwt.verify(token, config.SECRET);
+        let decoded = jwt.verify(token, config.JWT_SECRET);
         req.loggedUsername = decoded.name; // save user ID and role into request object
         req.loggedUserRole = decoded.role;
         next();

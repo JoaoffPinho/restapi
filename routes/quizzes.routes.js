@@ -19,6 +19,10 @@ router.route('/:quizzTitle/users/:name/comments')
 router.route('/:quizzTitle/users/:name/ratings')
     .put(authController.verifyToken, quizzController.addRating)
 
+router.route('/:quizzTitle/users/:name/remove')
+    .delete(authController.verifyToken, quizzController.delete)
+
+    
 
 
 router.all('*', function (req, res) {
