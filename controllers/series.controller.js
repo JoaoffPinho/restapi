@@ -162,7 +162,7 @@ exports.delete = async (req, res) => {
     const serie = await Serie.findOneAndRemove(req.params.serieTitle).exec();
     if (!serie) // returns the deleted document (if any) to the callback
     res.status(404).json({
-    message: `Not found serie with title=${req.params.serieTitle}.`
+    message: `Not found serie with title=${req.params.serieTitle}.`, serie: serie
     });
     else
     res.status(200).json({
