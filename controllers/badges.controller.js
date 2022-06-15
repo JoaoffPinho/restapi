@@ -43,20 +43,39 @@ exports.getBadges = async (req, res) => {
         res.status(400).json({ message: "Must be connected!" });
         return;
     }
-    
+
+
+
     const perPage = 10, page = req.query.page;
+    
+    
     try {
         const user = await User
         .findOne({"name": req.params.name})
         .exec();
 
-        let data = await Badge
+
+        if(req.loggedRole == 'admin'){
+            let data = await Badge
+            .find()
+            .select('title image') // select the fields
+            .skip(perPage * page)
+            .limit(perPage)
+            .exec();
+            res.status(200).json({success: true, badges: data});
+        } else {
+            let data = await Badge
             .find({ reqPoints: { $lt: user.points } })
             .select('title image') // select the fields
             .skip(perPage * page)
             .limit(perPage)
             .exec();
-        res.status(200).json({success: true, badges: data});
+            res.status(200).json({success: true, badges: data});
+        }
+        
+
+
+
         }
         catch (err) {
             res.status(500).json({
@@ -66,8 +85,13 @@ exports.getBadges = async (req, res) => {
 }; 
 
 exports.delete = async (req, res) => {
+    if ( req.loggedUserRole === 'regular') {
+        res.status(400).json({ message: "Must be an admin or advanced!" });
+        return;
+    }
+
     try {
-    const badge = await Badge.findOneAndRemove(req.params.badgeTitle).exec();
+    const badge = await Badge.deleteOne({"title": req.params.badgeTitle}).exec();
     if (!badge) // returns the deleted document (if any) to the callback
     res.status(404).json({
     message: `Not found Badge with title=${req.params.badgeTitle}.`
