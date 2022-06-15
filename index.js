@@ -36,5 +36,5 @@ app.get('*', function (req, res) {
 // if (port == null || port == "") {
 //   port = 8000;
 // }
-app.listen(port);
-// app.listen(port, () => console.log(`App listening at http://${host}:${port}/`));
+// app.listen(port);
+app.listen(port, () => console.log(`App listening at Port: ${port}`));
