@@ -162,7 +162,6 @@ exports.delete = async (req, res) => {
         return;
     }
 
-
     try {
     const movie = await Movie.deleteOne({"title": req.params.movieTitle});
     if (!movie) // returns the deleted document (if any) to the callback

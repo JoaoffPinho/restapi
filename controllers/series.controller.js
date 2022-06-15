@@ -162,11 +162,16 @@ exports.addRating = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
+    if ( req.loggedUserRole === 'regular') {
+        res.status(400).json({ message: "Must be an admin or advanced!" });
+        return;
+    }
+
     try {
-    const serie = await Serie.deleteOne(req.params.serieTitle)
+    const serie = await Serie.deleteOne({"title": req.params.serieTitle})
     if (!serie) // returns the deleted document (if any) to the callback
     res.status(404).json({
-    message: `Not found serie with title=${req.params.serieTitle}.`, serie: serie
+    message: `Not found serie with title=${req.params.serieTitle}.`
     });
     else
     res.status(200).json({
