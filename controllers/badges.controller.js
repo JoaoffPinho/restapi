@@ -62,7 +62,7 @@ exports.getBadges = async (req, res) => {
             .skip(perPage * page)
             .limit(perPage)
             .exec();
-            res.status(200).json({success: true, badges: data});
+            res.status(200).json({success: true, badges: data, as: req.loggedRole});
         } else {
             let data = await Badge
             .find({ reqPoints: { $lt: user.points } })
