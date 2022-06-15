@@ -7,7 +7,7 @@ const port = process.env.PORT;
 const host = process.env.HOST; 	
 
 const corsOptions = {
-    origin: "http://localhost:8081"
+    // origin: "http://localhost:8081"
 };
 
 app.use(cors(corsOptions)); //enable CORS requests from http://localhost:8081
@@ -31,4 +31,4 @@ app.get('*', function (req, res) {
     res.status(404).json({ message: 'WHAT???' });
 })
 
-app.listen(port, host, () => console.log(`App listening at http://${host}:${port}/`));
+app.listen(port, () => console.log(`App listening at http://${host}:${port}/`));
