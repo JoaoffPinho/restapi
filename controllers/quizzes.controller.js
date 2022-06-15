@@ -158,7 +158,7 @@ exports.addRating = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-    const quizz = await Quizz.findOneAndRemove(req.params.quizzTitle).exec();
+    const quizz = await Quizz.deleteOne(req.params.quizzTitle)
     if (!quizz) // returns the deleted document (if any) to the callback
     res.status(404).json({
     message: `Not found quizz with title=${req.params.quizzTitle}.`
