@@ -6,6 +6,9 @@ module.exports = (mongoose) => {
                     unique: true,
                     required: [true, 'Why no name?'] 
                 },
+                image:{
+                    type: String,
+                },
                 password: { 
                     type: String, 
                     trim: true,
