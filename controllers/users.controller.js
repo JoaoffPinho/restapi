@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
         .findOne({ name: req.body.name })
         .exec(); //get user data from DB
         
-        if (!user) return res.status(404).json({ success: false, msg: "User not found.", userInfo: user});
+        if (!user) return res.status(404).json({ success: false, msg: "User not found."});
 
         // tests a string (password in body) against a hash (password in database)
         const check = bcrypt.compareSync( req.body.password, user.password );
@@ -60,7 +60,7 @@ exports.login = async (req, res) => {
         const token = jwt.sign({ name: user.name, role: user.role },
             config.JWT_SECRET, { expiresIn: '24h' // 24 hours
         });
-            return res.status(200).json({ success: true, accessToken: token, name: user.name });
+            return res.status(200).json({ success: true, accessToken: token, userInfo: user});
     } 
     catch (err) {
         if (err.name === "ValidationError") {
