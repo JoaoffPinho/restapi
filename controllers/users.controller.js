@@ -556,7 +556,7 @@ exports.removeSerieSeen = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-    const user = await User.findOneAndRemove(req.body.name).exec();
+    const user = await User.deleteOne({"name": req.body.name}).exec();
     if (!user) // returns the deleted document (if any) to the callback
     res.status(404).json({
     message: `Not found user with name=${req.body.name}.`
