@@ -555,6 +555,11 @@ exports.removeSerieSeen = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
+    if ( req.loggedUserRole === 'regular') {
+        res.status(400).json({ message: "Must be an admin or advanced!" });
+        return;
+    }
+    
     try {
     const user = await User.deleteOne({"name": req.body.name}).exec();
     if (!user) // returns the deleted document (if any) to the callback
