@@ -51,6 +51,9 @@ router.route('/:name/series/:serieTitle/seen')
 router.route('/:name/quizzes/:quizzTitle')
     .patch(authController.verifyToken, userController.finishQuizz)
 
+router.route('/:name/remove')
+    .delete(authController.verifyToken, userController.delete)
+
     router.all('*', function (req, res) {
     res.status(404).json({ message: 'USERS: what???' });
 })
