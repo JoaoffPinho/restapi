@@ -17,7 +17,7 @@ exports.createUser = async (req, res) => {
         password: bcrypt.hashSync(req.body.password, 10),
         points: req.body.points,
         role: req.body.role,
-        image: req.body.role
+        image: req.body.image
     }) 
     
     
