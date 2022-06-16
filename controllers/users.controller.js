@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
         .findOne({ name: req.body.name })
         .exec(); //get user data from DB
         
-        if (!user) return res.status(404).json({ success: false, msg: "User not found." });
+        if (!user) return res.status(404).json({ success: false, msg: "User not found.", userInfo: user});
 
         // tests a string (password in body) against a hash (password in database)
         const check = bcrypt.compareSync( req.body.password, user.password );
