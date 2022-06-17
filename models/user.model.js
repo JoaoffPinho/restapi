@@ -8,6 +8,7 @@ module.exports = (mongoose) => {
                 },
                 image:{
                     type: String,
+                    default: "https://picsum.photos/300/300/?image=1074"
                 },
                 password: { 
                     type: String, 
