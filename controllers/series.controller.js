@@ -97,9 +97,9 @@ exports.createComment = async (req, res) => {
         return;
     }
 
-    let serie = await Serie.find({"title":req.params.serieTitle}).exec();
+    let serie = await Serie.findOne({"title":req.params.serieTitle}).exec();
 
-    if(req.params.serieTitle != serie.title){
+    if(!serie){
         res.status(404).json({message:"Serie not found"})
     }
 
@@ -141,9 +141,9 @@ exports.addRating = async (req, res) => {
         return;
     }
     
-    let serie = await Serie.find({"title":req.params.serieTitle}).exec();
+    let serie = await Serie.findOne({"title":req.params.serieTitle}).exec();
 
-    if(req.params.serieTitle != serie.title){
+    if(!serie){
         res.status(404).json({message:"Serie not found"})
     }
 

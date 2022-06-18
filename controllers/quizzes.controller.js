@@ -90,9 +90,9 @@ exports.createComment = async (req, res) => {
         return;
     }
 
-    let quizz = await Quizz.find({"title":req.params.quizzTitle}).exec();
+    let quizz = await Quizz.findOne({"title":req.params.quizzTitle}).exec();
 
-    if(req.params.quizzTitle != quizz.title){
+    if(!quizz){
         res.status(404).json({message:"Movie not found"})
     }
 
@@ -135,9 +135,9 @@ exports.addRating = async (req, res) => {
         return;
     }
     
-    let quizz = await Quizz.find({"title":req.params.quizzTitle}).exec();
+    let quizz = await Quizz.findOne({"title":req.params.quizzTitle}).exec();
 
-    if(req.params.quizzTitle != quizz.title){
+    if(!quizz){
         res.status(404).json({message:"Movie not found"})
     }
 
