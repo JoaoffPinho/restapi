@@ -42,9 +42,9 @@ module.exports = (mongoose) => {
                     season: Number,
                     episodes: Number
                 }],
-                actors:[{
+                actors:{
                     type: String
-                }],
+                },
                 release:{
                     type: Date,
                     // The dates of the first and last episodes of
@@ -52,9 +52,9 @@ module.exports = (mongoose) => {
                     min: '1950-01-01',
                     max: '2100-01-01'
                 },
-                writers:[{
+                writers:{
                     type: String
-                }]
+                }
             },
             { timestamps: false }
         );
