@@ -92,12 +92,11 @@ exports.createComment = async (req, res) => {
         return;
     }
 
-    let movie = await Movie.find({"title":req.params.movieTitle}).exec();
+    let movie = await Movie.findOne({"title":req.params.movieTitle}).exec();
 
-    if(req.params.movieTitle != movie[0].title){
-        res.status(404).json({message:"Movie not found", Movie: movie.title, Param: req.params.movieTitle})
+    if(!movie){
+        res.status(404).json({message:"Movie not found"})
     }
-
 
     let comment = {
         content: req.body.content,
@@ -106,6 +105,8 @@ exports.createComment = async (req, res) => {
     
 
     try {
+        
+
         let data = await Movie.findOneAndUpdate(
             {"title": req.params.movieTitle},
             { $push: {comments: comment}})
