@@ -44,6 +44,16 @@ module.exports = (mongoose) => {
                 },
                 actors:[{
                     type: String
+                }],
+                release:{
+                    type: Date,
+                    // The dates of the first and last episodes of
+                    // Star Trek: The Next Generation
+                    min: '1950-01-01',
+                    max: '2100-01-01'
+                },
+                writers:[{
+                    type: String
                 }]
             },
             { timestamps: false }
