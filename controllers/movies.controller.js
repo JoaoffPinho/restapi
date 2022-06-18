@@ -137,6 +137,12 @@ exports.addRating = async (req, res) => {
         return;
     }
     
+    let movie = await Movie.find({"title":req.params.movieTitle}).exec();
+
+    if(req.params.movieTitle != movie.title){
+        res.status(404).json({message:"Movie not found"})
+    }
+    
     let ratingMovie = {
         name: req.params.name,
         rating: req.body.rating
