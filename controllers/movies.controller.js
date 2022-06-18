@@ -92,6 +92,13 @@ exports.createComment = async (req, res) => {
         return;
     }
 
+    let movie = await Movie.find({"title":req.params.movieTitle})
+
+    if(req.params.movieTitle != movie.data.title){
+        res.status(404).json({message:"Movie not found"})
+    }
+
+    
     let comment = {
         content: req.body.content,
         name: req.loggedUsername
