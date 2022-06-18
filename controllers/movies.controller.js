@@ -136,11 +136,11 @@ exports.addRating = async (req, res) => {
         res.status(400).json({ message: "Request body can not be empty!" });
         return;
     }
-    
+
     let movie = await Movie.find({"title":req.params.movieTitle}).exec();
 
     if(req.params.movieTitle != movie.title){
-        res.status(404).json({message:"Movie not found"})
+        res.status(404).json({message:"Movie not found", Movie: movie})
     }
     
     let ratingMovie = {
