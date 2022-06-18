@@ -18,7 +18,9 @@ exports.createMovie = async (req, res) => {
         description: req.body.description,
         image: req.body.image,
         actors: req.body.actors,
-        duration: req.body.duration
+        duration: req.body.duration,
+        writers: req.body.writers,
+        release: req.body.release
     })
     
     try {

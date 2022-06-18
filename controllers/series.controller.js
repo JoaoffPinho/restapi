@@ -18,7 +18,9 @@ exports.createSerie = async (req, res) => {
         description: req.body.description,
         image: req.body.image,
         actors: req.body.actors,
-        seasons: req.body.seasons
+        seasons: req.body.seasons,
+        writers: req.body.writers,
+        release: req.body.release
     }) 
     
     try {
