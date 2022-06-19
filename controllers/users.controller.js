@@ -22,9 +22,19 @@ exports.createUser = async (req, res) => {
     
     
     try {
-        await user.save(); // save User in the database
-        console.log(user)
-        res.status(201).json({ success: true, msg: "New user created.", URL: `/users/${user._id}` });
+        const user = await User
+        .findOne({"name": req.body.name})
+        .exec();
+
+        if(!user){
+            await user.save(); // save User in the database
+            console.log(user)
+            res.status(201).json({ success: true, msg: "New user created.", URL: `/users/${user._id}` });
+        } else {
+            res.status(404).json({ success: false, msg: "User already exists"})
+        }
+
+        
         }
         catch (err) {
             if (err.name === "ValidationError") {
