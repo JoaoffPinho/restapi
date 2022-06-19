@@ -16,7 +16,7 @@ let router = express.Router();
 // })
 
 
-router.route('/')
+router.route('/signup')
     .post(userController.createUser);
 
 router.route('/login')
