@@ -152,25 +152,42 @@ exports.getHomeInfo = async (req, res) => {
             .select('title image')
             .limit(3)
             .exec();
-            return serie
-
+            data.push(serie);
         } catch(err){
-                res.status(500).json({
-                    success: false, msg: err.message || "Some error occurred while retrieving the movies."
-                });
+            res.status(500).json({
+                success: false, msg: err.message || "Some error occurred while retrieving the movies."
+            });
             }
-        let quizz = await Quizz
+        
+        try{
+            let quizz = await Quizz
             .find()
             .select('title image')
             .limit(3)
             .exec();
-        let movie = await Movie
-            .find()
-            .select('title image')
-            .limit(3)
-            .exec();
+            data.push(quizz);
+        } catch(err){
+            res.status(500).json({
+                success: false, msg: err.message || "Some error occurred while retrieving the movies."
+            });
+            }
+        
+        
 
-        data.push(serie,quizz,movie)
+        try{
+            let movie = await Movie
+            .find()
+            .select('title image')
+            .limit(3)
+            .exec();
+            data.push(movie);
+        } catch(err){
+            res.status(500).json({
+                success: false, msg: err.message || "Some error occurred while retrieving the movies."
+            });
+            }
+        
+
 
         res.status(200).json(data);
         }
