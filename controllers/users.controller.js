@@ -15,9 +15,6 @@ exports.createUser = async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 10),
-        points: req.body.points,
-        role: req.body.role,
-        image: req.body.image
     }) 
     
     
@@ -25,6 +22,8 @@ exports.createUser = async (req, res) => {
         const user = await User
         .findOne({"name": req.body.name})
         .exec();
+
+        console.log(user);
 
         if(!user){
             await user.save(); // save User in the database
