@@ -19,13 +19,13 @@ exports.createUser = async (req, res) => {
     
     
     try {
-        const user = await User
+        const userExists = await User
         .findOne({"name": req.body.name})
         .exec();
 
-        console.log(user);
+        console.log(userExists);
 
-        if(!user){
+        if(!userExists){
             await user.save(); // save User in the database
             console.log(user)
             res.status(201).json({ success: true, msg: "New user created.", URL: `/users/${user._id}` });
